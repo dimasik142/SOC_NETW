@@ -1,0 +1,122 @@
+.block_button_dialog{
+padding-top: 11px;
+
+height: 50px;
+}
+ul.dialog_menu{
+	float:left;
+	margin: 2px;
+}
+ul.dialog_menu li{
+ float: left;
+ margin-left: 9px;
+}
+ul.dialog_menu li a{
+	font: normal 100% 'trebuchet ms', sans serif;
+	display: block;
+	color: #00008B;
+	padding: 4px 4px 4px 4px;
+}
+ul.dialog_menu li.selected a {
+	background: #515572;
+	color: white;
+	border-radius: 5px;
+}
+ul.dialog_menu li a:hover{
+	background: #515572;
+	color: white;
+	border-radius: 5px;
+}
+hr{
+	margin:0;
+	padding: 0;
+	width: 958px;
+	color: grey;
+}
+.dialog{
+	position: relative;
+	top:20px;
+	height: 80px;
+	background: #FFFFFF;
+	border: 1px green;
+}
+.dialog_photo{
+	border-radius: 5px;
+	float: left;
+	margin: 3px;
+	width: 75px;
+	height: 75px;
+	border-radius: 5px;
+}
+.text{
+	margin: 0;
+	width: 200px;
+	height: 30px;
+	position: relative;
+	left: 100px;
+	background: grey;
+}
+.dialog a:hover{
+	background: #F5F5F5;
+}
+.message{
+	padding: 10px;	
+	height: auto;
+	width: 500px;
+	position: relative;
+	left:200px;
+    float: left;	
+    word-wrap: break-word;
+
+}
+#history{
+	padding: 10px;
+	top: 200px;
+	height: 69vh;
+	overflow: auto;
+	
+}
+.form_block{
+	margin: 3px;
+	height: 15vh;
+	width: 550px;
+	position: relative;
+	left:200px;
+	align-content: center;
+ 
+}
+#write{
+	height: 50px;
+	width: 200px;
+}
+.button{
+	height: 25px;
+	width: 80px;
+	border-radius: 5px;
+	color: white;
+	background: #515572;
+}
+.button a:hover{
+	background: red;
+	color: red;
+}
+.dialog_photo_small{
+    float: left;
+	margin: 3px;
+	width: 50px;
+	height: 50px;
+    border: 1px solid blue;
+	border-radius: 5px;
+}
+.data{
+	
+	width: 100px;
+	height: 70px ;
+
+	float: right;
+	text-align: center;
+	padding-top: 19px;
+}
+textarea{
+	resize: none;
+}

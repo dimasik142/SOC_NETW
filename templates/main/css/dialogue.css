@@ -1,0 +1,122 @@
+ul.dialog_menu{
+	float:left;
+	margin: 2px;
+}
+ul.dialog_menu li{
+ float: left;
+ margin-left: 9px;
+}
+ul.dialog_menu li a{
+	font: normal 100% 'trebuchet ms', sans serif;
+	display: block;
+	color: #00008B;
+	padding: 4px 4px 4px 4px;
+}
+ul.dialog_menu li.selected a {
+	background: #515572;
+	color: white;
+	border-radius: 5px;
+}
+ul.dialog_menu li a:hover{
+	background: #515572;
+	color: white;
+	border-radius: 5px;
+}
+.main_window{
+
+	padding-top: 11px;
+}
+hr{
+	margin:0;
+	padding: 0;
+	width: 954px;
+	color: grey;
+}
+.spisok{
+	
+	height: 50px;
+}
+.dialog{
+	margin: 0;
+	padding: 0;
+	position: relative;
+	top:0px;
+	height: 90px;
+	background: #FFFFFF;
+}
+.dialog_photo{
+	border-radius: 5px;
+	float: left;
+	margin: 5px 5px 5px 5px;
+	width: 75px;
+	height: 75px;
+	border-radius: 5px;
+}
+.text{
+	margin: 0;
+	width: 200px;
+	height: 30px;
+	position: relative;
+	left: 100px;
+	background: grey;
+}
+.dialog:hover{
+	background: #F5F5F5;
+}
+.history{
+	padding: 10px;
+	background: #F5F5F5;
+	top: 200px;
+	height: 300px;
+}
+.form_block{
+	margin: 3px;
+	height: 100px;
+	background: #F5F5F5;
+}
+#write{
+	height: 50px;
+	width: 200px;
+}
+.button{
+	height: 25px;
+	width: 80px;
+	border-radius: 5px;
+	color: white;
+	background: #515572;
+}
+.button a:hover{
+	background: red;
+	color: red;
+}
+.dialog_photo_small{
+    float: left;
+	margin: 3px 3px 3px 3px;
+	width: 50px;
+	height: 50px;
+	border-radius: 5px;
+}
+.messag{
+	margin: 0;
+	left: 50px;
+	width: 600px;
+	height: 30px;
+	float: left;
+	position: relative;
+	top: 30px;
+	vertical-align: middle;
+}
+.namedate{
+	top:5px;
+	width: 150px;
+	height: 80 px;
+	vertical-align: middle;
+	float: left;
+	position: relative;
+}
+.photo{
+
+	height: 85px;
+	width: 85px;
+	float: left;
+}	
