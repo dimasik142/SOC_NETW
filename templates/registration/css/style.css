@@ -15,10 +15,9 @@ ol, ul {list-style: none;}
 
 .container{
     margin: 0 auto;
-    border-top: 0 solid #D3C6C6;
     border-left: 1px solid #D3C6C6;
     border-right: 1px solid #D3C6C6;
-    border-bottom: 0 solid #D3C6C6;
+    border-bottom: 1px solid #D3C6C6;
     width: 960px;
     height: 665px;
     background: #fff;
@@ -53,3 +52,10 @@ ol, ul {list-style: none;}
     outline: none;
 }
 
+.errors{
+    color: red;
+    text-align: center;
+    width: 100%;
+    font-size: 20px;
+    margin: 0 0 10px 0;
+}

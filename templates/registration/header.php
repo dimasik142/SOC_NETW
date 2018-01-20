@@ -13,10 +13,12 @@ if (\User\UserMethods::checkUserAuth()){
 }
 ?>
 <!DOCTYPE html>
-<html >
+<html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title> Вхід </title>
     <link rel="stylesheet" href="../../templates/registration/css/style.css" />
+    <script src="../../templates/main/js/jquery-3.2.1.min.js"></script>
+    <script src="../../templates/registration/js/script.js"></script>
 </head>

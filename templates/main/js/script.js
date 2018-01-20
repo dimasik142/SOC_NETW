@@ -12,4 +12,17 @@ $(document).ready(function(){
             menu.removeAttr('style');
         }
     });
+    $('#logoutButton').click(function () {
+        $.ajax({
+            type: 'post',
+            url: '/lib/ajax/logOut.php',
+            dataType: 'json'
+        }).done(function (result) {
+            var url = "http://soc:8888/";
+            $(location).attr('href',url);
+        }).fail(function (result) {
+            console.log('Виникла помилка при розлогіненні')
+        });
+    })
+
 });

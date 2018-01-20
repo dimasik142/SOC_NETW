@@ -31,12 +31,4 @@
         <image src="photo/play.png">
     </button>
 </div>
-<?php
-\User\UserMethods::checkUserAuth();
-if (\User\UserMethods::checkUserAuth()){
-    echo 'uawe';
-} else {
-    echo 'no';
-}
-?>
 <?php require($_SERVER["DOCUMENT_ROOT"]."/templates/main/footer.php"); ?>

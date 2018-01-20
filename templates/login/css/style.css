@@ -16,10 +16,9 @@ ol, ul {list-style: none;}
 
 .container{	
 	margin: 0 auto;
-	border-top: 0px solid #D3C6C6; 
 	border-left: 1px solid #D3C6C6;
 	border-right: 1px solid #D3C6C6;
-	border-bottom: 0px solid #D3C6C6;
+	border-bottom: 1px solid #D3C6C6;
 	width: 960px;
 	height: 665px;
 	background: #fff;
@@ -32,7 +31,6 @@ ol, ul {list-style: none;}
 	text-align: center;
 	color: #000000;
 	font-size: 18pt;
-	position: relative;
 	top: 110px;
 	width: 480px;
 	height: 440px;	
@@ -45,13 +43,11 @@ ol, ul {list-style: none;}
 	text-align: center;
 	color: #000000;
 	font-size: 18pt;
-	position: relative;
 	top: 150px;
 	width: 480px;
 	height: 300px;
 }	
 .bl_form input {
-	padding-top: 10px;
 	box-shadow: 0 1px 4px rgba(0,0,0,1);
 	border: none;
 	padding: 12px 35px;
@@ -59,7 +55,6 @@ ol, ul {list-style: none;}
 	outline: none;
 }
 .bl_form a {
-	padding-top: 10px;
 	box-shadow: 0 1px 4px rgba(0,0,0,1);
 	border: none;
 	padding: 12px 35px;
@@ -86,3 +81,10 @@ h1 {
   font-size: 25px; 
   font-weight: 100 ;
  }
+.errors{
+	color: red;
+	text-align: center;
+	width: 100%;
+	font-size: 20px;
+	margin: 0 0 10px 0;
+}

@@ -5,9 +5,14 @@
  * Date: 14.01.2018
  * Time: 3:21
  */
+include($_SERVER["DOCUMENT_ROOT"].'/lib/php_interface/init.php');
 
-include($_SERVER["DOCUMENT_ROOT"].'/lib/php_interface/init.php'); ?>
-
+\User\UserMethods::checkUserAuth();
+if (!(\User\UserMethods::checkUserAuth())){
+    header('Location: http://'.$_SERVER["HTTP_HOST"].'/personal/auth/');
+}
+print_r($_SESSION);
+?>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -21,4 +26,3 @@ include($_SERVER["DOCUMENT_ROOT"].'/lib/php_interface/init.php'); ?>
 <body>
 <div class="container">
     <?php include($_SERVER["DOCUMENT_ROOT"].'/templates/main/include/header_menu.html'); ?>
-

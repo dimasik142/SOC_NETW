@@ -19,4 +19,6 @@ if (\User\UserMethods::checkUserAuth()){
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title> Вхід </title>
     <link rel="stylesheet" href="../../templates/login/css/style.css" />
+    <script src="../../templates/main/js/jquery-3.2.1.min.js"></script>
+    <script src="../../templates/login/js/script.js"></script>
 </head>

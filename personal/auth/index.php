@@ -5,17 +5,16 @@
  * Date: 14.01.2018
  * Time: 4:16
  */
-?>
-
-<?php require($_SERVER["DOCUMENT_ROOT"]."/templates/login/header.php"); ?>
+require($_SERVER["DOCUMENT_ROOT"]."/templates/login/header.php"); ?>
 
 <body>
 <div class="container">
     <div class="login">
-        <h1>Вхід</h1> <br>
-        <form class="bl_form" method="get">
-            <input type="email" id="User_email" size="15" maxlength="40" required placeholder="Eлектронна скринька"><br><br>
-            <input type="password" id="User_password" size="15" maxlength="40" required placeholder="Пароль"><br><br>
+        <h1>Вхід</h1>
+        <div class="errors"><br></div>
+        <form class="bl_form" name="LOGIN_FORM">
+            <input type="email" id="user_email" size="30" maxlength="40" required placeholder="Email:"><br><br>
+            <input type="password" id="user_password" size="30" maxlength="40" required placeholder="Password:"><br><br>
             <input type="submit" class="login_button" value="Вхід"><br><br>
             <a href="../registration/" class="other_button"> Реєстрація</a><br>
         </form>
