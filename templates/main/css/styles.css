@@ -316,7 +316,7 @@ textarea{
 }
 #newMassage{
     margin: 15px 0 0 0;
-    width: 300px;
+    width: 370px;
     height: 50px;
 }
 .messageContainer{
@@ -326,4 +326,23 @@ textarea{
 .delButton{
     float: right;
     cursor: pointer;
+}
+
+.deleteMessageButton{
+    float: right;
+    cursor: pointer;
+}
+.changeMessage{
+    float: right;
+    cursor: pointer;
+    margin: 0 5px 0 0;
+}
+.hiddenChangeInput{
+    display: none;
+    width: 300px;
+}
+#newChangeMassage{
+    margin: 15px 0 0 0;
+    width: 370px;
+    height: 50px;
 }

@@ -14,6 +14,7 @@ function ChatList(param) {
     this.refreshAjaxUrl = param.refreshAjaxUrl;
     this.messageQuantity = param.messageQuantity;
     this.listContainer = param.listContainer;
+    this.idMessageToChange = 0;
 }
 
 ChatList.prototype = {
@@ -34,7 +35,8 @@ ChatList.prototype = {
                     time: payType['time'],
                     photo: _this.senderData['photo'],
                     name: _this.senderData['name'],
-                    surename: _this.senderData['surename']
+                    surename: _this.senderData['surename'],
+                    canChange: true
                 }
             } else {
                 data = {
@@ -43,7 +45,8 @@ ChatList.prototype = {
                     time: payType['time'],
                     photo: _this.receiverData['photo'],
                     name: _this.receiverData['name'],
-                    surename: _this.receiverData['surename']
+                    surename: _this.receiverData['surename'],
+                    canChange: false
                 }
             }
             _this.renderMess(data)
@@ -70,32 +73,77 @@ ChatList.prototype = {
 
         $(messageContainer).append(data['text']);
 
+        if (data['canChange']) {
+            var deleteContainer = $('<a>', {
+                class: 'deleteMessageButton',
+                onclick: 'chatList.deleteMessage(this.getAttribute(\'data-id\'))'
+            }).appendTo(container).attr('data-id', data['id']);
+
+            $(deleteContainer).html('Видалити');
+
+            var changeContainer = $('<a>', {
+                class: 'changeMessage',
+                onclick: 'chatList.showChangeMessageForm(this.getAttribute(\'data-id\'), this.getAttribute(\'data-text\'))'
+            }).appendTo(container).attr('data-id', data['id']).attr('data-text', data['text']);
+
+            $(changeContainer).html('Змінити /');
+        }
         var dataContainer = $('<div>', {
             class: 'data'
         }).appendTo(container);
 
-        var deleteContainer = $('<a>', {
-            class: 'delButton',
-        }).appendTo(container).attr('data-id',);
-
-        $(deleteContainer).html('Видалити');
-
-        // $('<div>', {
-        //     class: 'data'
-        // }).appendTo(container);
+        $('<div>', {
+            class: 'data'
+        }).appendTo(container);
 
         $(dataContainer).append(data['time']);
 
         $('<br>').appendTo( this.listContainer );
     },
 
-    // deleteMessage: function deleteMessage() {
-    //
-    // },
+    deleteMessage: function deleteMessage(id) {
+        var _this = this;
+        if (id) {
+            $.ajax({
+                type: 'POST',
+                url: this.deleteMessageAjaxUrl,
+                data: {
+                    messageId: id
+                },
+                dataType: 'json'
+            }).done(function (result) {
+                _this.refreshMessagesArray(true);
+            }).fail(function (result) {
+                console.log('Виникла помилка при видаленні повідомлення');
+            });
+        }
+    },
 
-    // changeMessage: function changeMessage() {
-    //
-    // },
+    showChangeMessageForm: function showChangeMessageForm(id, text) {
+        this.idMessageToChange = id;
+        $('#newMassageForm').hide();
+        $('#newChangeMassage').val(text);
+        $('#changeMassageForm').show();
+    },
+
+    сhangeMessage: function showChangeMessageForm(text) {
+        var _this = this;
+        if (text && this.idMessageToChange) {
+            $.ajax({
+                type: 'POST',
+                url: this.changeMessageAjaxUrl,
+                data: {
+                    text: text,
+                    messageId: this.idMessageToChange
+                },
+                dataType: 'json'
+            }).done(function (result) {
+                _this.refreshMessagesArray(true);
+            }).fail(function (result) {
+                console.log('Виникла помилка при редагуванні повідомлення');
+            });
+        }
+    },
 
     sendMessage: function sendMessage(text) {
         var _this = this;
@@ -142,6 +190,6 @@ ChatList.prototype = {
     },
 
     scrollPoint: function addNewScrollPoint() {
-        $(this.listContainer).scrollTop(9999)
+        $(this.listContainer).scrollTop(9999999)
     }
 };

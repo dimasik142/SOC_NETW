@@ -83,6 +83,15 @@ class Sql
     }
 
     /**
+     * @param $from
+     * @param $where
+     * @return string
+     */
+    public static function makeDeleteString($from, $where) {
+        return 'DELETE FROM ' . $from . ' WHERE ' . $where;
+    }
+
+    /**
      * @param $data
      * @return array
      */

@@ -10,8 +10,6 @@ namespace Sql\Communication\Chat;
 
 use Sql\Communication\Communication;
 use Sql\Sql;
-use Sql\Person\Person;
-use User\UserMethods;
 
 class Chat extends Communication
 {
@@ -42,7 +40,35 @@ class Chat extends Communication
         }
     }
 
+    /**
+     * @param $messageId
+     * @return bool
+     */
+    public function deleteMessage($messageId) {
+        $sqlObj = new Sql();
+        $connect = $sqlObj->connection();
+        $sqlQuery = self::makeDeleteString(
+            $this->messagesTableName,
+            '`id` = ' . $messageId
+        );
+        $connect->query($sqlQuery);
+        return true;
+    }
 
-
-
+    /**
+     * @param $messageId
+     * @param $text
+     * @return bool
+     */
+    public function changeMessage($messageId, $text) {
+        $sqlObj = new Sql();
+        $connect = $sqlObj->connection();
+        $sqlQuery = self::makeUpdateString(
+            $this->messagesTableName,
+            '`text` = "'. $text . '"',
+            '`id` = "' . $messageId . '"'
+        );
+        $connect->query($sqlQuery);
+        return true;
+    }
 }
