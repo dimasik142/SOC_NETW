@@ -24,8 +24,10 @@ class Sql
             $this->host,
             $this->user,
             $this->password,
-            $this->db
+            $this->db,
+            8888
         );
+        $connection->set_charset("utf-8");
 
         return $connection;
     }
@@ -36,7 +38,7 @@ class Sql
      * @param $select
      * @return string
      */
-    public function makeSelectString($from, $where, $select) {
+    public static function makeSelectString($from, $where, $select) {
         $sql = 'SELECT ' . $select . ' FROM ' . $from;
         if ($where) {
             $sql .= ' WHERE ' . $where['NAME'] . '="' . $where['VALUE'] .'"';
@@ -50,24 +52,34 @@ class Sql
      * @param $values
      * @return string
      */
-    public function makeInsertString($tableName, $keys, $values) {
+    public static function makeInsertString($tableName, $keys, $values) {
         $sql = "INSERT INTO " . $tableName . " (";
         foreach ($keys as $key=>$item){
             $sql .= '`' . $item . '`';
-            if ($key != count($keys)){
+            if ($key != count($keys) - 1){
                 $sql .= ', ';
             }
         }
         $sql .= ') VALUES ( ';
         foreach ($values as $key=>$item){
             $sql .= '"' .$item . '"';
-            if ($key != count($values)){
+            if ($key != count($values) - 1){
                 $sql .= ', ';
             }
         }
         $sql .= ')';
 
         return $sql;
+    }
+
+    /**
+     * @param $from
+     * @param $set
+     * @param $where
+     * @return string
+     */
+    public static function makeUpdateString($from, $set, $where) {
+        return 'UPDATE ' . $from . ' SET ' . $set . ' WHERE ' . $where;
     }
 
     /**

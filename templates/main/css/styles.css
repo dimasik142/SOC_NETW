@@ -238,7 +238,6 @@ hr{
     margin: 5px 5px 5px 5px;
     width: 75px;
     height: 75px;
-    border-radius: 5px;
 }
 .text{
     margin: 0;
@@ -251,16 +250,20 @@ hr{
 .dialog:hover{
     background: #F5F5F5;
 }
-.history{
+#history{
     padding: 10px;
-    background: #F5F5F5;
     top: 200px;
-    height: 300px;
+    height: 74vh;
+    overflow: auto;
 }
 .form_block{
     margin: 3px;
-    height: 100px;
-    background: #F5F5F5;
+    height: 15vh;
+    width: 550px;
+    position: relative;
+    left:200px;
+    align-content: center;
+
 }
 #write{
     height: 50px;
@@ -307,4 +310,20 @@ hr{
     height: 85px;
     width: 85px;
     float: left;
+}
+textarea{
+    resize: none;
+}
+#newMassage{
+    margin: 15px 0 0 0;
+    width: 300px;
+    height: 50px;
+}
+.messageContainer{
+    text-align: center;
+    width: 100%;
+}
+.delButton{
+    float: right;
+    cursor: pointer;
 }

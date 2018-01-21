@@ -11,13 +11,11 @@ include($_SERVER["DOCUMENT_ROOT"].'/lib/php_interface/init.php');
 if (!(\User\UserMethods::checkUserAuth())){
     header('Location: http://'.$_SERVER["HTTP_HOST"].'/personal/auth/');
 }
-print_r($_SESSION);
 ?>
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ua">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title> Моя сторінка </title>
     <link href="../../templates/main/css/styles.css" rel="stylesheet" />
     <script src="../../templates/main/js/jquery-3.2.1.min.js"></script>

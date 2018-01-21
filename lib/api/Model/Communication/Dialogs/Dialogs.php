@@ -15,9 +15,6 @@ use User\UserMethods;
 
 class Dialogs extends Communication
 {
-    private $dialogsTableName = 'dialogs';
-    private $messagesTableName = 'messages';
-
     /**
      * @param $id
      * @return array|bool
@@ -72,9 +69,10 @@ class Dialogs extends Communication
         $connect = $sqlObj->connection();
         $sqlQuery = self::makeSelectLimitedString(
             $this->messagesTableName,
-            '(`sender_id` = '. $id_receiver . ' OR `receiver_id` = ' . $id_receiver . ") ",
+            '((`sender_id` = '. $id_receiver . ' AND `receiver_id` = '. $_SESSION['USER_AUTH_ID'] .') OR (`receiver_id` = ' . $id_receiver . " AND `sender_id` = " . $_SESSION['USER_AUTH_ID'] . ")) ",
             '*',
-            1
+            1,
+            'DESC'
         );
 
         $queryResult = $connect->query($sqlQuery);

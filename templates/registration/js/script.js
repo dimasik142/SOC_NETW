@@ -38,11 +38,4 @@ $(document).ready(function(){
             $('.errors').html('Паролі не співпадають');
         }
     });
-
-    $('#name').val('dimas');
-    $('#surename').val('ivanov');
-    $('#pass').val('60adarep');
-    $('#email').val('dimasik111@mail.ua');
-    $('#pass_repeat').val('60adarep');
-
 });

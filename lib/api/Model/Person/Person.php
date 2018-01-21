@@ -111,7 +111,7 @@ class Person extends Sql
             [1 => $data['name'], 2 => $data['surename'], 3 => $id]
         );
         $connect->query($sql);
-        return $sql;
+        return true;
     }
 
     /**
