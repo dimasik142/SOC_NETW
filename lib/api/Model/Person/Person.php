@@ -26,10 +26,14 @@ class Person extends Sql
         ];
         $sqlQuery = $this->makeSelectString('users', $whereQuery, '*');
         $queryResult = $connect->query($sqlQuery);
-        $information_array = $queryResult->fetch_all(MYSQLI_ASSOC);
-        if ($information_array[0]['password'] == $pass){
-            UserMethods::setUserAuth($information_array[0]['id']);
-            return true;
+        if ($queryResult->num_rows > 0) {
+            $information_array = $queryResult->fetch_all(MYSQLI_ASSOC);
+            if ($information_array[0]['password'] == $pass) {
+                UserMethods::setUserAuth($information_array[0]['user_id']);
+                return true;
+            } else {
+                return false;
+            }
         } else {
             return false;
         }
@@ -47,11 +51,15 @@ class Person extends Sql
         ];
         $sqlQuery = $this->makeSelectString('users', $whereQuery, '*');
         $queryResult = $connect->query($sqlQuery);
-        $information_array = $queryResult->fetch_all(MYSQLI_ASSOC);
-        if ($information_array){
-            return true;
+        if ($queryResult->num_rows > 0) {
+            $information_array = $queryResult->fetch_all(MYSQLI_ASSOC);
+            if ($information_array){
+                return true;
+            } else {
+                return false;
+            }
         } else {
-            return false;
+          return false;
         }
     }
 
@@ -65,10 +73,14 @@ class Person extends Sql
             'NAME' => 'email',
             'VALUE' => $email
         ];
-        $sqlQuery = $this->makeSelectString('users', $whereQuery, 'id');
+        $sqlQuery = $this->makeSelectString('users', $whereQuery, 'user_id');
         $queryResult = $connect->query($sqlQuery);
-        $information_array = $queryResult->fetch_all(MYSQLI_ASSOC);
-        return $information_array[0]['id'];
+        if ($queryResult->num_rows > 0) {
+            $information_array = $queryResult->fetch_all(MYSQLI_ASSOC);
+            return $information_array[0]['user_id'];
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -96,10 +108,32 @@ class Person extends Sql
         $sql = $this->makeInsertString(
             'users_data',
             [1 => 'name', 2 => 'surename', 3 => 'user_id'],
-            [1 => $data['name'], 2 => $data['pass'], 3 => $id]
+            [1 => $data['name'], 2 => $data['surename'], 3 => $id]
         );
         $connect->query($sql);
         return $sql;
     }
 
+    /**
+     * @param $id
+     * @return array|bool
+     */
+    public function getUserInformation($id){
+        $connect = $this->connection();
+        $sqlQuery = $this->makeSelectString(
+            'users_data',
+            [
+                'NAME' => 'user_id',
+                'VALUE' => $id
+            ],
+            '*'
+        );
+        $queryResult = $connect->query($sqlQuery);
+        if ($queryResult->num_rows > 0) {
+            $information_array = $queryResult->fetch_all(MYSQLI_ASSOC);
+            return $information_array[0];
+        } else {
+            return false;
+        }
+    }
 }
