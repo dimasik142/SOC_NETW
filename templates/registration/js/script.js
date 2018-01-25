@@ -28,8 +28,8 @@ $(document).ready(function(){
                 if (result['success']['ERROR']){
                     $('.errors').html(result['success']['ERROR']);
                 } else {
-                    var url = "http://localhost/home/";
-                    $(location).attr('href',url);
+                    // var url = "http://localhost/home/";
+                    // $(location).attr('href',url);
                 }
             }).fail(function (result) {
                 $('.errors').html('Виникла помилка при реєтрації користувача');

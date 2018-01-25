@@ -23,7 +23,8 @@ class Sql
         $connect = OCILogon(
             $this->user,
             $this->password,
-            $this->host
+            $this->host,
+            'CL8MSWIN1251'
         );
 
         return $connect;

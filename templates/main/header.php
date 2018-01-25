@@ -16,7 +16,7 @@ if (!(\User\UserMethods::checkUserAuth())){
 <!DOCTYPE html>
 <html lang="ua">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
     <title> Моя сторінка </title>
     <link href="../../templates/main/css/styles.css" rel="stylesheet" />
     <script src="../../templates/main/js/jquery-3.2.1.min.js"></script>

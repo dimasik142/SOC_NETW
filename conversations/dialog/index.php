@@ -9,10 +9,11 @@
 require($_SERVER["DOCUMENT_ROOT"]."/templates/main/header.php");
 $chat = new \Sql\Communication\Chat\Chat();
 $user = new \Sql\Person\Person();
+$chat->checkDialog($_SESSION['USER_AUTH_ID'],$_GET['id']);
 $userData = $user->getUserInformation($_SESSION['USER_AUTH_ID']);
 $userReceiverData = $user->getUserInformation($_GET['id']);
 
-$messagesList = $chat->getMessagesList($_SESSION['USER_AUTH_ID'],$_GET['id'],25);
+$messagesList = $chat->getMessagesList($_SESSION['USER_AUTH_ID'],$_GET['id'],5000);
 ?>
 <script src="../../templates/main/js/ChatList.js"></script>
 

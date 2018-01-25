@@ -78,4 +78,49 @@ class Chat extends Communication
         oci_close($connect);
         return true;
     }
+
+    /**
+     * @param $senderId
+     * @param $receiverId
+     * @return bool
+     */
+    public function checkDialog($senderId, $receiverId){
+        $sqlObj = new Sql();
+        $connect = $sqlObj->connection();
+        $sqlQuery = self::makeSelectLimitedString(
+            $this->dialogsTableName,
+            '((USER_ID = '. $senderId . ' AND RECEIVER_ID = '. $receiverId .') OR (RECEIVER_ID = ' . $senderId . " AND USER_ID = " . $receiverId . "))",
+            '*',
+            10,
+            'ASC'
+        );
+        $stid = oci_parse($connect, $sqlQuery);
+        $r = oci_execute($stid);
+        while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
+            if ($row){
+                return true;
+            }
+        }
+        OCICommit($connect);
+        $this->addDialog($senderId, $receiverId);
+        $this->addDialog($receiverId, $senderId);
+    }
+
+    /**
+     * @param $senderId
+     * @param $receiverId
+     */
+    private function addDialog($senderId, $receiverId){
+        $sqlObj = new Sql();
+        $connect = $sqlObj->connection();
+        $sql = $this->makeInsertString(
+            $this->dialogsTableName,
+            [0 => 'USER_ID', 1 => 'RECEIVER_ID'],
+            [0 => $senderId, 1 => $receiverId]
+        );
+        $s = oci_parse($connect, $sql);
+        oci_execute($s, OCI_DEFAULT);
+        oci_commit($connect);
+        oci_close($connect);
+    }
 }

@@ -88,8 +88,8 @@ class Person extends Sql
         $connect = $this->connection();
         $sql = $this->makeInsertString(
             'USERS',
-            [1 => 'EMAIL', 2 => 'PASSWORD'],
-            [1 => $data['email'], 2 => $data['pass']]
+            [0 => 'EMAIL', 1 => 'PASSWORD'],
+            [0 => $data['email'], 1 => $data['pass']]
         );
         $s = oci_parse($connect, $sql);
         oci_execute($s, OCI_DEFAULT);
@@ -107,8 +107,8 @@ class Person extends Sql
         $connect = $this->connection();
         $sql = $this->makeInsertString(
             'USERS_DATA',
-            [1 => 'NAME', 2 => 'SURENAME', 3 => 'USER_ID'],
-            [1 => $data['name'], 2 => $data['surename'], 3 => $id]
+            [0 => 'NAME', 1 => 'SURENAME', 2 => 'USER_ID'],
+            [0 => $data['name'], 1 => $data['surename'], 2 => $id]
         );
         $s = oci_parse($connect, $sql);
         oci_execute($s, OCI_DEFAULT);
@@ -184,5 +184,26 @@ class Person extends Sql
         } else {
             return ['ERROR' => 'Старий пароль не правильний'];
         }
+    }
+
+    /**
+     * @param $id
+     * @return array
+     */
+    public function getAllUsers($id){
+        $connect = $this->connection();
+        $resultArray = [];
+        $sqlQuery = $this->makeSelectString('users', [], '*');
+        $stid = oci_parse($connect, $sqlQuery);
+        $r = oci_execute($stid);
+        while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
+            if ($row AND $row['USER_ID'] != $id) {
+                $result['DATA'] = $this->getUserInformation($row['USER_ID']);
+                $result['LOGIN'] = $row;
+                array_push($resultArray,$result);
+            }
+        }
+        OCICommit($connect);
+        return $resultArray;
     }
 }
