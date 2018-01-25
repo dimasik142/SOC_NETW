@@ -12,11 +12,11 @@ $userData = $person->getUserInformation($_SESSION['USER_AUTH_ID']);
 
 <div class="main_window">
     <div class="title">
-        <?= $userData['name'] ?>   <?= $userData['surename'] ?>
+        <?= $userData['NAME'] ?>   <?= $userData['SURENAME'] ?>
     </div>
     <div>
         <div class ="div_photo">
-            <p id ="lena"><img id ="photo_low_quality" src="<?= $userData['photo'] ?>"></p>
+            <p id ="lena"><img id ="photo_low_quality" src="<?= $userData['PHOTO'] ?>"></p>
             <br>
         </div>
     </div>

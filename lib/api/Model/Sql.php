@@ -10,26 +10,23 @@ namespace Sql;
 
 class Sql
 {
-    private $user = 'root';
-    private $password = 'root';
+    private $user = 'system';
+    private $password = 'ivanov';
     private $db = 'social_network';
-    private $host = 'localhost';
+    private $host = 'localhost/xe';
 
     /**
-     * @return object
+     * @return resource
      */
     public function connection(){
 
-        $connection = mysqli_connect(
-            $this->host,
+        $connect = OCILogon(
             $this->user,
             $this->password,
-            $this->db,
-            8888
+            $this->host
         );
-        $connection->set_charset("utf-8");
 
-        return $connection;
+        return $connect;
     }
 
     /**
@@ -41,7 +38,7 @@ class Sql
     public static function makeSelectString($from, $where, $select) {
         $sql = 'SELECT ' . $select . ' FROM ' . $from;
         if ($where) {
-            $sql .= ' WHERE ' . $where['NAME'] . '="' . $where['VALUE'] .'"';
+            $sql .= ' WHERE ' . $where['NAME'] . "='" . $where['VALUE'] ."'";
         }
         return $sql;
     }
@@ -53,16 +50,16 @@ class Sql
      * @return string
      */
     public static function makeInsertString($tableName, $keys, $values) {
-        $sql = "INSERT INTO " . $tableName . " (";
+        $sql = "insert into " . $tableName . " (";
         foreach ($keys as $key=>$item){
-            $sql .= '`' . $item . '`';
-            if ($key != count($keys) - 1){
+            $sql .= $item ;
+            if ($key != count($keys) -1 ){
                 $sql .= ', ';
             }
         }
         $sql .= ') VALUES ( ';
         foreach ($values as $key=>$item){
-            $sql .= '"' .$item . '"';
+            $sql .= "'" .$item . "'";
             if ($key != count($values) - 1){
                 $sql .= ', ';
             }

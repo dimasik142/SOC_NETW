@@ -14,21 +14,21 @@ $dialogsArray = $dialogs->getDialogsById($_SESSION['USER_AUTH_ID']);
         <li class="selected"><a style="cursor: pointer">Діалоги</a></li>
         <li><a style="cursor: pointer">Перегляд діалогів</a></li>
     </ul>
-    <br>
+    <br><br>
     <?php foreach ($dialogsArray as $item) : ?>
         <?php if ($item['USER_DATA'] and $item['LAST_MESSAGE']): ?>
-            <a href="dialog/?id=<?= $item['USER_DATA']['user_id']; ?>">
+            <a href="dialog/?id=<?= $item['USER_DATA']['USER_ID']; ?>">
                 <div class="dialog">
                     <hr>
                         <div class="photo">
-                            <img src="<?= $item['USER_DATA']['photo']; ?>"  class="dialog_photo">
+                            <img src="<?= $item['USER_DATA']['PHOTO']; ?>"  class="dialog_photo">
                         </div>
                         <div class="namedate">
-                            <?= $item['USER_DATA']['name']; ?>  <?= $item['USER_DATA']['surename']; ?>
-                            <br><?= $item['LAST_MESSAGE']['time']; ?>
+                            <?= $item['USER_DATA']['NAME']; ?>  <?= $item['USER_DATA']['SURENAME']; ?>
+                            <br><?= $item['LAST_MESSAGE']['TIME']; ?>
                         </div>
                         <div class="messag">
-                            <?= $item['LAST_MESSAGE']['text']; ?>
+                            <?= $item['LAST_MESSAGE']['TEXT']; ?>
                         </div>
                     <hr>
                 </div>

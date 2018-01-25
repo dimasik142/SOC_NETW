@@ -18,7 +18,7 @@
             <input type="email" id="email" size="30" required placeholder="Eлектронна скринька"></p><br>
             <input type="password" id="pass" size="30" required placeholder="Пароль"></p><br>
             <input type="password" id="pass_repeat" size="30" required placeholder="Повторіть пароль"></p><br>
-            <input type="submit"  id="button_registration" value="Зареєструватись" onclick="check_password()" >
+            <input type="submit"  id="button_registration" value="Зареєструватись" >
         </form>
     </div>
 </div>

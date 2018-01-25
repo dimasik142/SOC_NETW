@@ -28,7 +28,7 @@ $(document).ready(function(){
                 if (result['success']['ERROR']){
                     $('.errors').html(result['success']['ERROR']);
                 } else {
-                    var url = "http://soc:8888/home/";
+                    var url = "http://localhost/home/";
                     $(location).attr('href',url);
                 }
             }).fail(function (result) {

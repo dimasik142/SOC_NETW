@@ -21,9 +21,9 @@ $(document).ready(function(){
         chatList.refreshMessagesArray();
     });
 
-    setInterval(function run () {
-        chatList.refreshMessagesArray(false);
-    }, 5000);
+    // setInterval(function run () {
+    //     chatList.refreshMessagesArray(false);
+    // }, 5000);
 
     $('.changeMessage').click(function () {
         console.log(this)

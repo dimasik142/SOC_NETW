@@ -18,7 +18,7 @@ $(document).ready(function(){
             url: '/lib/ajax/logOut.php',
             dataType: 'json'
         }).done(function (result) {
-            var url = "http://soc:8888/";
+            var url = "http://localhost";
             $(location).attr('href',url);
         }).fail(function (result) {
             console.log('Виникла помилка при розлогіненні')

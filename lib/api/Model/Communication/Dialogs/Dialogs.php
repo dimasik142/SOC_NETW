@@ -11,7 +11,6 @@ namespace Sql\Communication\Dialogs;
 use Sql\Communication\Communication;
 use Sql\Sql;
 use Sql\Person\Person;
-use User\UserMethods;
 
 class Dialogs extends Communication
 {
@@ -21,9 +20,9 @@ class Dialogs extends Communication
      */
     public function getDialogsById ($id){
         $dialogsArray = [];
+
         $sqlObj = new Sql();
         $connect = $sqlObj->connection();
-
         $sqlQuery = $sqlObj->makeSelectString(
             $this->dialogsTableName,
             [
@@ -32,17 +31,13 @@ class Dialogs extends Communication
             ],
             '*'
         );
-
-        $queryResult = $connect->query($sqlQuery);
-        if ($queryResult->num_rows > 0) {
-            $information_array = $queryResult->fetch_all(MYSQLI_ASSOC);
-            foreach ($information_array as $item) {
-                array_push($dialogsArray, $this->getInformationByDialog($item['reciver_id']));
-            }
-            return $dialogsArray;
-        } else {
-            return false;
+        $stid = oci_parse($connect, $sqlQuery);
+        $r = oci_execute($stid);
+        while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
+            array_push($dialogsArray, $this->getInformationByDialog($row['RECEIVER_ID']));
         }
+        OCICommit($connect);
+        return $dialogsArray;
     }
 
     /**
@@ -69,19 +64,17 @@ class Dialogs extends Communication
         $connect = $sqlObj->connection();
         $sqlQuery = self::makeSelectLimitedString(
             $this->messagesTableName,
-            '((`sender_id` = '. $id_receiver . ' AND `receiver_id` = '. $_SESSION['USER_AUTH_ID'] .') OR (`receiver_id` = ' . $id_receiver . " AND `sender_id` = " . $_SESSION['USER_AUTH_ID'] . ")) ",
+            '((SENDER_ID = '. $id_receiver . ' AND RECEIVER_ID = '. $_SESSION['USER_AUTH_ID'] .') OR (RECEIVER_ID = ' . $id_receiver . " AND SENDER_ID = " . $_SESSION['USER_AUTH_ID'] . ")) AND ROWNUM <= 1 ",
             '*',
             1,
             'DESC'
         );
-
-        $queryResult = $connect->query($sqlQuery);
-        if ($queryResult->num_rows > 0) {
-            $information_array = $queryResult->fetch_all(MYSQLI_ASSOC);
-            return $information_array[0];
-        } else {
-            return false;
+        $stid = oci_parse($connect, $sqlQuery);
+        $r = oci_execute($stid);
+        while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
+            return $row;
         }
+        OCICommit($connect);
     }
 
     /**

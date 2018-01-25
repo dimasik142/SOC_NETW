@@ -17,7 +17,7 @@ $(document).ready(function(){
                 dataType: 'json'
             }).done(function (result) {
                 if (result['success']){
-                    var url = "http://soc:8888/home/";
+                    var url = "http://localhost/home/";
                     $(location).attr('href',url);
                 } else {
                     $('.errors').html('Неправильно введені данні')

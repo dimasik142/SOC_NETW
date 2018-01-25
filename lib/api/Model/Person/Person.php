@@ -25,18 +25,17 @@ class Person extends Sql
             'VALUE' => $email
         ];
         $sqlQuery = $this->makeSelectString('users', $whereQuery, '*');
-        $queryResult = $connect->query($sqlQuery);
-        if ($queryResult->num_rows > 0) {
-            $information_array = $queryResult->fetch_all(MYSQLI_ASSOC);
-            if ($information_array[0]['password'] == $pass) {
-                UserMethods::setUserAuth($information_array[0]['user_id']);
+        $stid = oci_parse($connect, $sqlQuery);
+        $r = oci_execute($stid);
+        while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
+            if ($row['PASSWORD'] == $pass){
+                UserMethods::setUserAuth($row['USER_ID']);
                 return true;
             } else {
                 return false;
             }
-        } else {
-            return false;
         }
+        OCICommit($connect);
     }
 
     /**
@@ -50,17 +49,15 @@ class Person extends Sql
             'VALUE' => $email
         ];
         $sqlQuery = $this->makeSelectString('users', $whereQuery, '*');
-        $queryResult = $connect->query($sqlQuery);
-        if ($queryResult->num_rows > 0) {
-            $information_array = $queryResult->fetch_all(MYSQLI_ASSOC);
-            if ($information_array){
+        $stid = oci_parse($connect, $sqlQuery);
+        $r = oci_execute($stid);
+        while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
+            if ($row) {
                 return true;
-            } else {
-                return false;
             }
-        } else {
-          return false;
         }
+        OCICommit($connect);
+        return false;
     }
 
     /**
@@ -74,13 +71,13 @@ class Person extends Sql
             'VALUE' => $email
         ];
         $sqlQuery = $this->makeSelectString('users', $whereQuery, 'user_id');
-        $queryResult = $connect->query($sqlQuery);
-        if ($queryResult->num_rows > 0) {
-            $information_array = $queryResult->fetch_all(MYSQLI_ASSOC);
-            return $information_array[0]['user_id'];
-        } else {
-            return false;
+        $stid = oci_parse($connect, $sqlQuery);
+        $r = oci_execute($stid);
+        while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
+            return $row['USER_ID'];
         }
+        OCICommit($connect);
+        return false;
     }
 
     /**
@@ -90,11 +87,14 @@ class Person extends Sql
     public function saveUser($data){
         $connect = $this->connection();
         $sql = $this->makeInsertString(
-            'users',
-            [1 => 'email', 2 => 'password'],
+            'USERS',
+            [1 => 'EMAIL', 2 => 'PASSWORD'],
             [1 => $data['email'], 2 => $data['pass']]
         );
-        $connect->query($sql);
+        $s = oci_parse($connect, $sql);
+        oci_execute($s, OCI_DEFAULT);
+        oci_commit($connect);
+        oci_close($connect);
         return $sql;
     }
 
@@ -106,11 +106,14 @@ class Person extends Sql
     public function saveUserData($data, $id){
         $connect = $this->connection();
         $sql = $this->makeInsertString(
-            'users_data',
-            [1 => 'name', 2 => 'surename', 3 => 'user_id'],
+            'USERS_DATA',
+            [1 => 'NAME', 2 => 'SURENAME', 3 => 'USER_ID'],
             [1 => $data['name'], 2 => $data['surename'], 3 => $id]
         );
-        $connect->query($sql);
+        $s = oci_parse($connect, $sql);
+        oci_execute($s, OCI_DEFAULT);
+        oci_commit($connect);
+        oci_close($connect);
         return true;
     }
 
@@ -123,17 +126,16 @@ class Person extends Sql
         $sqlQuery = $this->makeSelectString(
             'users_data',
             [
-                'NAME' => 'user_id',
+                'NAME' => 'USER_ID',
                 'VALUE' => $id
             ],
             '*'
         );
-        $queryResult = $connect->query($sqlQuery);
-        if ($queryResult->num_rows > 0) {
-            $information_array = $queryResult->fetch_all(MYSQLI_ASSOC);
-            return $information_array[0];
-        } else {
-            return false;
+        $stid = oci_parse($connect, $sqlQuery);
+        $r = oci_execute($stid);
+        while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
+            return $row;
         }
+        OCICommit($connect);
     }
 }

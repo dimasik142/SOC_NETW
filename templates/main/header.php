@@ -11,6 +11,7 @@ include($_SERVER["DOCUMENT_ROOT"].'/lib/php_interface/init.php');
 if (!(\User\UserMethods::checkUserAuth())){
     header('Location: http://'.$_SERVER["HTTP_HOST"].'/personal/auth/');
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="ua">

@@ -13,7 +13,6 @@ $userData = $user->getUserInformation($_SESSION['USER_AUTH_ID']);
 $userReceiverData = $user->getUserInformation($_GET['id']);
 
 $messagesList = $chat->getMessagesList($_SESSION['USER_AUTH_ID'],$_GET['id'],25);
-
 ?>
 <script src="../../templates/main/js/ChatList.js"></script>
 

@@ -25,19 +25,20 @@ class Chat extends Communication
         $connect = $sqlObj->connection();
         $sqlQuery = self::makeSelectLimitedString(
             $this->messagesTableName,
-            '((`sender_id` = '. $idReceiver . ' AND `receiver_id` = '. $userId .') OR (`receiver_id` = ' . $idReceiver . " AND `sender_id` = " . $userId . ")) ",
+            '((SENDER_ID = '. $idReceiver . ' AND RECEIVER_ID = '. $userId .') OR (RECEIVER_ID = ' . $idReceiver . " AND SENDER_ID = " . $userId . ")) AND ROWNUM <= " . $quantity,
             '*',
             $quantity,
             'ASC'
         );
+        $messagesArray = [];
 
-        $queryResult = $connect->query($sqlQuery);
-        if ($queryResult->num_rows > 0) {
-            $information_array = $queryResult->fetch_all(MYSQLI_ASSOC);
-            return $information_array;
-        } else {
-            return false;
+        $stid = oci_parse($connect, $sqlQuery);
+        $r = oci_execute($stid);
+        while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
+            array_push($messagesArray, $row);
         }
+        OCICommit($connect);
+        return $messagesArray;
     }
 
     /**
@@ -49,9 +50,12 @@ class Chat extends Communication
         $connect = $sqlObj->connection();
         $sqlQuery = self::makeDeleteString(
             $this->messagesTableName,
-            '`id` = ' . $messageId
+            'ID = ' . $messageId
         );
-        $connect->query($sqlQuery);
+        $s = oci_parse($connect, $sqlQuery);
+        oci_execute($s, OCI_DEFAULT);
+        oci_commit($connect);
+        oci_close($connect);
         return true;
     }
 
@@ -65,10 +69,13 @@ class Chat extends Communication
         $connect = $sqlObj->connection();
         $sqlQuery = self::makeUpdateString(
             $this->messagesTableName,
-            '`text` = "'. $text . '"',
-            '`id` = "' . $messageId . '"'
+            "TEXT = '". $text . "'",
+            "ID = '" . $messageId . "'"
         );
-        $connect->query($sqlQuery);
+        $s = oci_parse($connect, $sqlQuery);
+        oci_execute($s, OCI_DEFAULT);
+        oci_commit($connect);
+        oci_close($connect);
         return true;
     }
 }

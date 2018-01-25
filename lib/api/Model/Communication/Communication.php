@@ -14,8 +14,8 @@ use User\UserMethods;
 
 class Communication extends Sql
 {
-    protected $messagesTableName = 'messages';
-    protected $dialogsTableName = 'dialogs';
+    protected $messagesTableName = 'MESSAGES';
+    protected $dialogsTableName = 'DIALOGS';
 
     /**
      * @param $from
@@ -26,7 +26,7 @@ class Communication extends Sql
      * @return string
      */
     public static function makeSelectLimitedString($from, $where, $select , $limit, $order) {
-        return 'SELECT ' . $select . ' FROM ' . $from . ' WHERE ' . $where . ' ORDER BY time '.$order.' ' . ' LIMIT ' . $limit ;
+        return 'SELECT ' . $select . ' FROM ' . $from . ' WHERE ' . $where ;
     }
 
     /**
@@ -37,15 +37,19 @@ class Communication extends Sql
      */
     public function saveMessage($text, $sender, $receiver){
         $sqlObj = new Sql();
-        $time = self::getTime();
         $connect = $sqlObj->connection();
-        $sql = $sqlObj->makeInsertString(
+
+        $sqlQuery  = $sqlObj->makeInsertString(
             $this->messagesTableName,
-            ['sender_id', 'receiver_id', 'text', 'time'],
-            [$sender, $receiver, $text, $time]
+            ['sender_id', 'receiver_id', 'text'],
+            [$sender, $receiver, $text]
         );
-        $connect->query($sql);
+        $s = oci_parse($connect, $sqlQuery);
+        oci_execute($s, OCI_DEFAULT);
+        oci_commit($connect);
+        oci_close($connect);
         return true;
+
     }
 
     /**
@@ -57,12 +61,15 @@ class Communication extends Sql
         $sqlObj = new Sql();
         $connect = $sqlObj->connection();
 
-        $sql = $sqlObj->makeUpdateString(
+        $sqlQuery = $sqlObj->makeUpdateString(
             $this->messagesTableName,
             '`text` = ' . $newText,
             '`id` = "'. $messageId . '"'
         );
-        $connect->query($sql);
+        $s = oci_parse($connect, $sqlQuery);
+        oci_execute($s, OCI_DEFAULT);
+        oci_commit($connect);
+        oci_close($connect);
         return true;
     }
 

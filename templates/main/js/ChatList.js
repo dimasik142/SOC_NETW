@@ -28,24 +28,24 @@ ChatList.prototype = {
         this.clearContainer(this.listContainer);
         var _this = this;
         $.each(_this.messagesList, function (index, payType) {
-            if (Number(_this.senderData['user_id']) === Number(payType['sender_id'])){
+            if (Number(_this.senderData['USER_ID']) === Number(payType['SENDER_ID'])){
                 data = {
-                    text: payType['text'],
-                    id: payType['id'],
-                    time: payType['time'],
-                    photo: _this.senderData['photo'],
-                    name: _this.senderData['name'],
-                    surename: _this.senderData['surename'],
+                    text: payType['TEXT'],
+                    id: payType['ID'],
+                    time: payType['TIME'],
+                    photo: _this.senderData['PHOTO'],
+                    name: _this.senderData['NAME'],
+                    surename: _this.senderData['SURENAME'],
                     canChange: true
                 }
             } else {
                 data = {
-                    text: payType['text'],
-                    id: payType['id'],
-                    time: payType['time'],
-                    photo: _this.receiverData['photo'],
-                    name: _this.receiverData['name'],
-                    surename: _this.receiverData['surename'],
+                    text: payType['NAME'],
+                    id: payType['ID'],
+                    time: payType['TIME'],
+                    photo: _this.receiverData['PHOTO'],
+                    name: _this.receiverData['NAME'],
+                    surename: _this.receiverData['SURENAME'],
                     canChange: false
                 }
             }
@@ -153,7 +153,7 @@ ChatList.prototype = {
                 url: this.sendMessageAjaxUrl,
                 data: {
                     text:text,
-                    receiver_id:this.receiverData['user_id']
+                    receiver_id:this.receiverData['USER_ID']
                 },
                 dataType: 'json'
             }).done(function (result) {
@@ -170,7 +170,7 @@ ChatList.prototype = {
             type: 'POST',
             url: this.refreshAjaxUrl,
             data: {
-                receiver_id: this.receiverData['user_id'],
+                receiver_id: this.receiverData['USER_ID'],
                 quantity: this.messageQuantity
             },
             dataType: 'json'
