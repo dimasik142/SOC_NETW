@@ -1,6 +1,6 @@
 .main_block{
-	font: 14px/18px Arial, Tahoma, sans-serif;
-	text-align: center;
+    font: 14px/18px Arial, Tahoma, sans-serif;
+    text-align: center;
     color: #000000;
     font-size: 12pt;
     padding-top: 12px;
@@ -8,18 +8,17 @@
     left: 240px;
     top: 20px;
     width: 480px;
-    height: 1225px;
+    height: 700px;
     border: 1px solid #D3C6C6;
-
 }
 
 #part_settings{
-	position:relative;
-	font-size: 15px;
-	margin: auto;
-	width :350px;
-	height: 250px;
-	
+    position:relative;
+    font-size: 15px;
+    margin: auto;
+    width :350px;
+    height: 250px;
+
 }
 .bl_form input {
     background: rgba(255,255,255,0.80);
@@ -27,9 +26,21 @@
     border: none;
     padding: 10px 24px;
     border-radius: 15px;
-    
+
     outline: none;
 }
-#button{
+.button{
     color: black;
     background: linear-gradient(to top, #ADD100, #7B920A);}
+
+.main_window{
+    height: 800px;
+}
+.settingsPassError{
+    color: red;
+    font-size: 20px;
+}
+.settingsPassResult{
+    color: green;
+    font-size: 20px;
+}

@@ -138,4 +138,51 @@ class Person extends Sql
         }
         OCICommit($connect);
     }
+
+    /**
+     * @param $id
+     * @return array
+     */
+    public function getUserSettings($id){
+        $connect = $this->connection();
+        $sqlQuery = $this->makeSelectString(
+            'USERS',
+            [
+                'NAME' => 'USER_ID',
+                'VALUE' => $id
+            ],
+            '*'
+        );
+        $stid = oci_parse($connect, $sqlQuery);
+        $r = oci_execute($stid);
+        while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
+            return $row;
+        }
+        OCICommit($connect);
+    }
+
+    /**
+     * @param $id
+     * @param $oldPass
+     * @param $newPass
+     * @return array
+     */
+    public function changeUserPassword($id, $oldPass, $newPass){
+        $userData = $this->getUserSettings($id);
+        if ($userData['PASSWORD'] == $oldPass){
+            $connect = $this->connection();
+            $sql = $this->makeUpdateString(
+                'USERS',
+                "PASSWORD = '". $newPass . "'",
+                "USER_ID = '" . $id . "'"
+            );
+            $s = oci_parse($connect, $sql);
+            oci_execute($s, OCI_DEFAULT);
+            oci_commit($connect);
+            oci_close($connect);
+            return ['SUCCESS' => true];
+        } else {
+            return ['ERROR' => 'Старий пароль не правильний'];
+        }
+    }
 }

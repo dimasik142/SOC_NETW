@@ -27,7 +27,7 @@ $messagesList = $chat->getMessagesList($_SESSION['USER_AUTH_ID'],$_GET['id'],25)
         <div id="history"></div>
     <hr>
     <div class="form_block">
-        <img src="<?= $userData['photo'] ?>" class="dialog_photo">
+        <img src="<?= $userData['PHOTO'] ?>" class="dialog_photo">
         <form name="newMassageForm" id="newMassageForm">
             <input type="text" id="newMassage" autocomplete="off" required name="newMassage" >
             <input type="submit" value="Отправить" name="send" class="button" style="float: right; margin: 30px 0 0 0">

@@ -27,12 +27,12 @@ ChatList.prototype = {
     renderList: function renderList() {
         this.clearContainer(this.listContainer);
         var _this = this;
-        $.each(_this.messagesList, function (index, payType) {
-            if (Number(_this.senderData['USER_ID']) === Number(payType['SENDER_ID'])){
+        $.each(_this.messagesList, function (index, item) {
+            if (Number(_this.senderData['USER_ID']) === Number(item['SENDER_ID'])){
                 data = {
-                    text: payType['TEXT'],
-                    id: payType['ID'],
-                    time: payType['TIME'],
+                    text: item['TEXT'],
+                    id: item['ID'],
+                    time: item['DATA_TIME'],
                     photo: _this.senderData['PHOTO'],
                     name: _this.senderData['NAME'],
                     surename: _this.senderData['SURENAME'],
@@ -40,9 +40,9 @@ ChatList.prototype = {
                 }
             } else {
                 data = {
-                    text: payType['NAME'],
-                    id: payType['ID'],
-                    time: payType['TIME'],
+                    text: item['TEXT'],
+                    id: item['ID'],
+                    time: item['DATA_TIME'],
                     photo: _this.receiverData['PHOTO'],
                     name: _this.receiverData['NAME'],
                     surename: _this.receiverData['SURENAME'],
