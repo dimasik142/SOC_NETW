@@ -102,6 +102,7 @@ class Chat extends Communication
             }
         }
         OCICommit($connect);
+        oci_close($connect);
         $this->addDialog($senderId, $receiverId);
         $this->addDialog($receiverId, $senderId);
     }

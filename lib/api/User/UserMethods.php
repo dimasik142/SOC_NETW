@@ -19,7 +19,8 @@ class UserMethods
     public static function checkUserAuth () {
 
         if ($_SESSION['AUTH'] == true){
-            return true;
+            $person = new Person();
+            return $person->checkUserStatus($_SESSION['USER_AUTH_ID']);
         } else {
             return false;
         }

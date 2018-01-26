@@ -24,12 +24,35 @@ class Person extends Sql
             'NAME' => 'email',
             'VALUE' => $email
         ];
-        $sqlQuery = $this->makeSelectString('users', $whereQuery, '*');
+        $sqlQuery = $this->makeSelectString('USERS', $whereQuery, '*');
         $stid = oci_parse($connect, $sqlQuery);
         $r = oci_execute($stid);
         while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
-            if ($row['PASSWORD'] == $pass){
+            if ($row['PASSWORD'] == $pass AND $row['STATUS'] != 'NO'){
                 UserMethods::setUserAuth($row['USER_ID']);
+                return true;
+            } else {
+                return false;
+            }
+        }
+        OCICommit($connect);
+    }
+
+    /**
+     * @param $id
+     * @return bool
+     */
+    public function checkUserStatus($id) {
+        $connect = $this->connection();
+        $whereQuery = [
+            'NAME' => 'USER_ID',
+            'VALUE' => $id
+        ];
+        $sqlQuery = $this->makeSelectString('USERS', $whereQuery, '*');
+        $stid = oci_parse($connect, $sqlQuery);
+        $r = oci_execute($stid);
+        while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
+            if ($row['STATUS'] != 'NO'){
                 return true;
             } else {
                 return false;
@@ -205,5 +228,30 @@ class Person extends Sql
         }
         OCICommit($connect);
         return $resultArray;
+    }
+
+    /**
+     * @param $id
+     * @param $status
+     * @return bool
+     */
+    public function changeStatusUser($id, $status){
+        $connect = $this->connection();
+        $newStatus = '';
+        if ($status == 'NO'){
+            $newStatus = 'YES';
+        } else {
+            $newStatus = 'NO';
+        }
+        $sql = $this->makeUpdateString(
+            'USERS',
+            "STATUS = '". $newStatus . "'",
+            "USER_ID = '" . $id . "'"
+        );
+        $s = oci_parse($connect, $sql);
+        oci_execute($s, OCI_DEFAULT);
+        oci_commit($connect);
+        oci_close($connect);
+        return true;
     }
 }

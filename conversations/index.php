@@ -25,7 +25,7 @@ $dialogsArray = $dialogs->getDialogsById($_SESSION['USER_AUTH_ID']);
                         </div>
                         <div class="namedate">
                             <?= $item['USER_DATA']['NAME']; ?>  <?= $item['USER_DATA']['SURENAME']; ?>
-                            <br><?= $item['LAST_MESSAGE']['TIME']; ?>
+                            <br><?= $item['LAST_MESSAGE']['DATA_TIME']; ?>
                         </div>
                         <div class="messag">
                             <?= $item['LAST_MESSAGE']['TEXT']; ?>

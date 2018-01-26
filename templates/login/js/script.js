@@ -17,10 +17,14 @@ $(document).ready(function(){
                 dataType: 'json'
             }).done(function (result) {
                 if (result['success']){
-                    var url = "http://localhost/home/";
-                    $(location).attr('href',url);
+                    if (result['success'] !== 'admin') {
+                        var url = "http://localhost/home/";
+                        $(location).attr('href', url);
+                    } else {
+                        $(location).attr('href', result['path']);
+                    }
                 } else {
-                    $('.errors').html('Неправильно введені данні')
+                    $('.errors').html('Неправильно введені данні або ВИ заблоковані адміністратором')
                 }
             }).fail(function (result) {
                 $('.errors').html('Некоректні данні')
